@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import { createUser } from './services/userAPI';
-
 import Login from './components/Login';
 import Search from './components/Search';
 import Album from './components/Album';
@@ -12,33 +10,7 @@ import ProfileEdit from './components/ProfileEdit';
 import NotFound from './components/NotFound';
 
 class App extends React.Component {
-  state = {
-    inputLogin: '',
-    isRedirect: false,
-    isLoading: false,
-    artistName: '',
-  };
-
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState(() => ({
-      [name]: value,
-    }));
-  };
-
-  handleClick = async () => {
-    const { inputLogin } = this.state;
-    this.setState({
-      isLoading: true,
-    });
-    await createUser({ name: inputLogin });
-    this.setState({
-      isRedirect: true,
-    });
-  };
-
   render() {
-    const { state, handleChange, handleClick } = this;
     return (
       <div>
         <BrowserRouter>
@@ -67,7 +39,9 @@ class App extends React.Component {
               exact
               path="/search"
               render={ (props) => (
-                <Search onInputChange={ handleChange } { ...state } { ...props } />
+                <Search
+                  { ...props }
+                />
               ) }
             />
             <Route
@@ -75,9 +49,6 @@ class App extends React.Component {
               path="/"
               render={ (props) => (
                 <Login
-                  handleClick={ handleClick }
-                  onInputChange={ handleChange }
-                  { ...state }
                   { ...props }
                 />
               ) }
