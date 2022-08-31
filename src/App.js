@@ -16,6 +16,7 @@ class App extends React.Component {
     inputLogin: '',
     isRedirect: false,
     isLoading: false,
+    artistName: '',
   };
 
   handleChange = ({ target }) => {
@@ -27,9 +28,9 @@ class App extends React.Component {
 
   handleClick = async () => {
     const { inputLogin } = this.state;
-    this.setState(({
+    this.setState({
       isLoading: true,
-    }));
+    });
     await createUser({ name: inputLogin });
     this.setState({
       isRedirect: true,
@@ -40,7 +41,6 @@ class App extends React.Component {
     const { state, handleChange, handleClick } = this;
     return (
       <div>
-        <p>TrybeTunes</p>
         <BrowserRouter>
           <Switch>
             <Route
@@ -66,7 +66,9 @@ class App extends React.Component {
             <Route
               exact
               path="/search"
-              render={ (props) => <Search { ...props } /> }
+              render={ (props) => (
+                <Search onInputChange={ handleChange } { ...state } { ...props } />
+              ) }
             />
             <Route
               exact
