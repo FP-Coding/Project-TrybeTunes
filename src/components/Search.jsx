@@ -4,7 +4,7 @@ class Search extends Component {
   render() {
     return (
       <div data-testid="page-search">
-        teste
+        test
       </div>
     );
   }

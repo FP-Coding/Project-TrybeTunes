@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+import { createUser } from './services/userAPI';
+
 import Login from './components/Login';
 import Search from './components/Search';
 import Album from './components/Album';
@@ -10,7 +12,32 @@ import ProfileEdit from './components/ProfileEdit';
 import NotFound from './components/NotFound';
 
 class App extends React.Component {
+  state = {
+    inputLogin: '',
+    isRedirect: false,
+    isLoading: false,
+  };
+
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState(() => ({
+      [name]: value,
+    }));
+  };
+
+  handleClick = async () => {
+    const { inputLogin } = this.state;
+    this.setState(({
+      isLoading: true,
+    }));
+    await createUser({ name: inputLogin });
+    this.setState({
+      isRedirect: true,
+    });
+  };
+
   render() {
+    const { state, handleChange, handleClick } = this;
     return (
       <div>
         <p>TrybeTunes</p>
@@ -41,12 +68,19 @@ class App extends React.Component {
               path="/search"
               render={ (props) => <Search { ...props } /> }
             />
-            <Route exact path="/" render={ (props) => <Login { ...props } /> } />
             <Route
               exact
-              path="*"
-              render={ (props) => <NotFound { ...props } /> }
+              path="/"
+              render={ (props) => (
+                <Login
+                  handleClick={ handleClick }
+                  onInputChange={ handleChange }
+                  { ...state }
+                  { ...props }
+                />
+              ) }
             />
+            <Route path="*" render={ (props) => <NotFound { ...props } /> } />
           </Switch>
         </BrowserRouter>
       </div>
