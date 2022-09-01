@@ -16,6 +16,12 @@ class Search extends Component {
     isHidden: true,
   };
 
+  componentWillUnmount() {
+    this.setState({
+      albunsArtistSearch: [],
+    });
+  }
+
   handleClickSearch = async () => {
     const { artistNameInput } = this.state;
     this.setState(
