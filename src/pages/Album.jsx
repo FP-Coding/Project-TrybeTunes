@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Header from './Header';
-import MusicCard from './MusicCard';
+import Header from '../components/Header';
+import MusicCard from '../components/MusicCard';
 
 import getMusics from '../services/musicsAPI';
 import {
@@ -10,7 +10,7 @@ import {
   getFavoriteSongs,
   removeSong,
 } from '../services/favoriteSongsAPI';
-import Loading from './Loading';
+import Loading from '../components/Loading';
 
 class Album extends Component {
   constructor() {

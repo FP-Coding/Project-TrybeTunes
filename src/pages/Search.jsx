@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 
-import Loading from './Loading';
-import Header from './Header';
+import Loading from '../components/Loading';
+import Header from '../components/Header';
 
 const TAMANHO_MINIMO_ARTIST_NAME = 2;
 class Search extends Component {
