@@ -13,18 +13,21 @@ import {
 import Loading from './Loading';
 
 class Album extends Component {
-  state = {
-    listMusic: [],
-    favoriteMusicSongs: [],
-    imageAlbum: '',
-    nameAlbum: '',
-    nameArtistAlbum: '',
-    isLoading: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      listMusic: [],
+      favoriteMusicSongs: [],
+      imageAlbum: '',
+      nameAlbum: '',
+      nameArtistAlbum: '',
+      isLoading: false,
+    };
+  }
 
-  componentDidMount() {
-    this.getSongsFavorits();
-    this.catchMusic();
+  async componentDidMount() {
+    await this.getSongsFavorits();
+    await this.catchMusic();
   }
 
   catchMusic = async () => {
@@ -47,7 +50,6 @@ class Album extends Component {
     const elementFavoritExist = favoriteMusicSongs.some(
       ({ trackId }) => trackId === musicInfo.trackId,
     );
-    console.log(elementFavoritExist);
     if (elementFavoritExist) {
       await removeSong(musicInfo);
       await this.getSongsFavorits();
