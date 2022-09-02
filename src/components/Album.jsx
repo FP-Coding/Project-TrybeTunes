@@ -5,7 +5,11 @@ import Header from './Header';
 import MusicCard from './MusicCard';
 
 import getMusics from '../services/musicsAPI';
-import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
+import {
+  addSong,
+  getFavoriteSongs,
+  removeSong,
+} from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 
 class Album extends Component {
@@ -19,16 +23,9 @@ class Album extends Component {
   };
 
   componentDidMount() {
+    this.getSongsFavorits();
     this.catchMusic();
-    this.getFavorites();
   }
-
-  getFavorites = async () => {
-    const favoriteSongs = await getFavoriteSongs();
-    this.setState({
-      favoriteMusicSongs: favoriteSongs,
-    });
-  };
 
   catchMusic = async () => {
     const { match } = this.props;
@@ -43,55 +40,64 @@ class Album extends Component {
   };
 
   handleCheckedMusicFavorites = async (musicInfo) => {
+    const { favoriteMusicSongs } = this.state;
     this.setState({
       isLoading: true,
     });
-    const favoritesMusics = await getFavoriteSongs();
-    this.setState({
-      favoriteMusicSongs: favoritesMusics,
-    });
-    if (this.isFavorite(musicInfo)) {
+    const elementFavoritExist = favoriteMusicSongs.some(
+      ({ trackId }) => trackId === musicInfo.trackId,
+    );
+    console.log(elementFavoritExist);
+    if (elementFavoritExist) {
       await removeSong(musicInfo);
+      await this.getSongsFavorits();
     } else {
       await addSong(musicInfo);
+      await this.getSongsFavorits();
     }
     this.setState({
       isLoading: false,
     });
   };
 
-  isFavorite = ({ trackId: id }) => {
-    const { favoriteMusicSongs } = this.state;
-    return favoriteMusicSongs.some(({ trackId }) => trackId === id);
+  getSongsFavorits = async () => {
+    const dataSongs = await getFavoriteSongs();
+    this.setState({
+      favoriteMusicSongs: dataSongs,
+    });
   };
 
   render() {
-    const { handleCheckedMusicFavorites, state } = this;
+    const { handleCheckedMusicFavorites, getSongsFavorits, state } = this;
     const {
       listMusic,
       imageAlbum,
       nameAlbum,
       nameArtistAlbum,
       isLoading,
+      favoriteMusicSongs,
     } = state;
     const renderListMusic = listMusic
       .filter((_, index) => index !== 0)
       .map((musicInfo, index) => (
-        (
-          <div key={ `${index}-music` }>
-            <MusicCard { ...musicInfo } />
-            <label htmlFor={ `${index}-music` }>
-              Favoritar
-              <input
-                data-testid={ `checkbox-music-${musicInfo.trackId}` }
-                id={ `${index}-music` }
-                checked={ this.isFavorite(musicInfo) }
-                type="checkbox"
-                onChange={ () => handleCheckedMusicFavorites(musicInfo) }
-              />
-            </label>
-          </div>
-        )
+        <div key={ `${index}-music` }>
+          <MusicCard { ...musicInfo } />
+          <label htmlFor={ `${index}-music` }>
+            Favoritar
+            <input
+              type="checkbox"
+              id={ `${index}-music` }
+              data-testid={ `checkbox-music-${musicInfo.trackId}` }
+              onClick={ async () => {
+                await handleCheckedMusicFavorites(musicInfo);
+                await getSongsFavorits();
+              } }
+              defaultChecked={ favoriteMusicSongs !== null && favoriteMusicSongs.some(
+                ({ trackId }) => trackId === musicInfo.trackId,
+              ) }
+            />
+          </label>
+        </div>
       ));
     const infoAlbum = (
       <div>
