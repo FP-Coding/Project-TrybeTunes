@@ -50,11 +50,8 @@ class Album extends Component {
     const elementFavoritExist = favoriteMusicSongs.some(
       ({ trackId }) => trackId === musicInfo.trackId,
     );
-    if (elementFavoritExist) {
-      await removeSong(musicInfo);
-    } else {
-      await addSong(musicInfo);
-    }
+    if (elementFavoritExist) await removeSong(musicInfo);
+    else await addSong(musicInfo);
     await this.getSongsFavorits();
     this.setState({
       isLoading: false,
