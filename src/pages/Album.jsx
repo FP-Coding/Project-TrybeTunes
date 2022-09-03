@@ -47,16 +47,15 @@ class Album extends Component {
     this.setState({
       isLoading: true,
     });
-    const elementFavoritExist = favoriteMusicSongs ? favoriteMusicSongs.some(
+    const elementFavoritExist = favoriteMusicSongs.some(
       ({ trackId }) => trackId === musicInfo.trackId,
-    ) : null;
+    );
     if (elementFavoritExist) {
       await removeSong(musicInfo);
-      await this.getSongsFavorits();
     } else {
       await addSong(musicInfo);
-      await this.getSongsFavorits();
     }
+    await this.getSongsFavorits();
     this.setState({
       isLoading: false,
     });
