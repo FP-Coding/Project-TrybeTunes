@@ -66,7 +66,7 @@ class Album extends Component {
   };
 
   render() {
-    const { handleCheckedMusicFavorites, getSongsFavorits, state } = this;
+    const { handleCheckedMusicFavorites, state } = this;
     const {
       listMusic,
       imageAlbum,
@@ -88,7 +88,6 @@ class Album extends Component {
               data-testid={ `checkbox-music-${musicInfo.trackId}` }
               onClick={ async () => {
                 await handleCheckedMusicFavorites(musicInfo);
-                await getSongsFavorits();
               } }
               defaultChecked={ favoriteMusicSongs !== null && favoriteMusicSongs.some(
                 ({ trackId }) => trackId === musicInfo.trackId,
