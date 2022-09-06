@@ -1,0 +1,37 @@
+.form-login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+}
+
+.container-login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 30vh auto;
+  border-radius: 15px;
+  box-shadow: 10px 10px 5px black;
+  width: 30%;
+  height: 70%;
+  padding: 0 30px 50px ;
+  border: 1px solid lightgray;
+  background-color: white;
+}
+
+.input-login {
+  width: 40vh;
+  text-align: center;
+}
+
+
+.title-app {
+  width: 208px;
+  margin-bottom: 15px;
+}
+
+body {
+  background-color: aqua;
+}

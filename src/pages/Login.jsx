@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
+import './Login.css';
+import logo from './LOGO_POSITIVA 1.png';
 
 import { createUser } from '../services/userAPI';
 
@@ -36,23 +38,27 @@ class Login extends Component {
     const { inputLogin, isRedirect, isLoading } = state;
 
     const formulario = (
-      <form>
-        <input
-          type="text"
-          name="inputLogin"
-          value={ inputLogin }
-          onChange={ handleChange }
-          data-testid="login-name-input"
-        />
-        <button
-          data-testid="login-submit-button"
-          type="button"
-          onClick={ handleClickLogin }
-          disabled={ inputLogin.length < TAMANHO_MINIMO_LOGIN_NAME }
-        >
-          Entrar
-        </button>
-      </form>);
+      <div className="container-login">
+        <img className="title-app" src={ logo } alt="trybeTunes" />
+        <form className="form-login">
+          <input
+            className="input-login"
+            type="text"
+            name="inputLogin"
+            value={ inputLogin }
+            onChange={ handleChange }
+            data-testid="login-name-input"
+          />
+          <button
+            data-testid="login-submit-button"
+            type="button"
+            onClick={ handleClickLogin }
+            disabled={ inputLogin.length < TAMANHO_MINIMO_LOGIN_NAME }
+          >
+            Entrar
+          </button>
+        </form>
+      </div>);
     return (
       <div data-testid="page-login">
         { isLoading ? <Loading /> : formulario }

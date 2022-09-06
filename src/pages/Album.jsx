@@ -89,7 +89,7 @@ class Album extends Component {
               onClick={ async () => {
                 await handleCheckedMusicFavorites(musicInfo);
               } }
-              defaultChecked={ favoriteMusicSongs !== null && favoriteMusicSongs.some(
+              checked={ favoriteMusicSongs !== null && favoriteMusicSongs.some(
                 ({ trackId }) => trackId === musicInfo.trackId,
               ) }
             />
