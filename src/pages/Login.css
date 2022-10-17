@@ -8,28 +8,27 @@
 
 .container-login {
   align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 30vh auto;
+  background-color: white;
+  border: 1px solid lightgray;
   border-radius: 15px;
   box-shadow: 10px 10px 5px black;
-  width: 30%;
+  display: flex;
+  flex-direction: column;
   height: 70%;
-  padding: 0 30px 50px ;
-  border: 1px solid lightgray;
-  background-color: white;
+  justify-content: center;
+  margin: 30vh auto;
+  padding: 0 30px 50px;
+  width: 30%;
 }
 
 .input-login {
-  width: 40vh;
   text-align: center;
+  width: 40vh;
 }
 
-
 .title-app {
-  width: 208px;
   margin-bottom: 15px;
+  width: 208px;
 }
 
 body {
